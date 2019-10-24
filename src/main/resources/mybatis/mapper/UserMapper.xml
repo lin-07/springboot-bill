@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lq.springboot.mapper.UserMapper">
+
+    <select id="getUsers" parameterType="com.lq.springboot.entities.User" resultType="com.lq.springboot.entities.User">
+        select * from user where 1 = 1
+        <if test="username != null and username != ''">
+            and username like '%${username}%'
+        </if>
+    </select>
+
+    <select id="getById" resultType="com.lq.springboot.entities.User">
+        select * from user where id = #{id}
+    </select>
+
+    <insert id="save" parameterType="com.lq.springboot.entities.User">
+        INSERT INTO `user` (`username`, `real_name`, `password`, `gender`, `birthday`, `user_type`)
+        VALUES (#{username}, #{realName}, #{password}, #{gender}, #{birthday}, #{userType})
+    </insert>
+
+    <update id="update" parameterType="com.lq.springboot.entities.User">
+        UPDATE `user` SET `username`=#{username}, `real_name`=#{realName}, `password`=#{password}, `gender`=#{gender},
+        `birthday`=#{birthday}, `user_type`=#{userType} WHERE id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="integer">
+        delete from user where id = #{id}
+    </delete>
+
+    <select id="getUserByUserName" resultType="com.lq.springboot.entities.User">
+        select * from user where upper(username) = upper(#{username})
+    </select>
+
+</mapper>

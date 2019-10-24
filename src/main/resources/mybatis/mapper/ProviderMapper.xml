@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lq.springboot.mapper.ProviderMapper">
+
+
+    <select id="getPorviders" resultType="com.lq.springboot.entities.Provider">
+        select * from provider where 1=1
+        <if test="providerName != null and providerName != ''">
+            and providerName like '%${providerName}%'
+        </if>
+    </select>
+
+    <select id="getById" resultType="com.lq.springboot.entities.Provider">
+        select * from provider where pid = #{pid}
+    </select>
+
+    <update id="update" parameterType="com.lq.springboot.entities.Provider">
+        UPDATE provider SET `provider_code`=#{providerCode}, `providerName`=#{providerName},
+        `people`=#{people}, `phone`=#{phone}, `address`=#{address}, `fax`=#{fax}, `describe`=#{describe},
+         `create_date`=now() WHERE `pid`=#{pid}
+    </update>
+
+    <insert id="save" parameterType="com.lq.springboot.entities.Provider">
+        INSERT INTO provider (`provider_code`, `providerName`, `people`, `phone`, `address`, `fax`, `describe`, `create_date`)
+        VALUES (#{providerCode}, #{providerName}, #{people}, #{phone}, #{address}, #{fax}, #{describe}, now());
+    </insert>
+
+    <delete id="delete" parameterType="integer">
+        delete from provider where pid = #{pid}
+    </delete>
+
+</mapper>
